@@ -11,10 +11,14 @@ void	ft_error(int err)
 
 int	main(int argc, char *argv[])
 {
-	t_philo philo;
+	int			a;
+	t_input		input;
+	pthread_t		*pthread;
+	pthread_mutex_t	*mutex;
 
 	if (!check_validation(argc, argv))
 		ft_error(CHECK_VALI);
-	init_philo(&philo);
-	init_thread();
+	init_input(&input);
+	pthread_mutex_init(mutex, NULL);
+	pthread_create(pthread, NULL, start_routine, (void *)a);
 }

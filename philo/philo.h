@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/11/02 12:27:12 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:11:22 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ enum s_error
 	CHECK_VALI
 };
 
-typedef struct s_philo
+typedef struct s_input
 {
 	int	number_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
 	int option_must_eat;
-} t_philo;
+} t_input;
 
-
-int	check_validation(int argc, char argv);
-
+int			check_validation(int argc, char argv);
+long long	philo_atoi(char	*str);
 #endif
