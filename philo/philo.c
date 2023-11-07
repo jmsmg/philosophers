@@ -20,5 +20,8 @@ int	main(int argc, char *argv[])
 		ft_error(CHECK_VALI);
 	init_input(&input);
 	pthread_mutex_init(mutex, NULL);
-	pthread_create(pthread, NULL, start_routine, (void *)a);
+	if (pthread_create(pthread, NULL, start_routine, (void *)&a) < 0)
+	{
+		perror("thread create error");
+	}
 }
