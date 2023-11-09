@@ -11,7 +11,6 @@ void	ft_error(int err)
 
 int	main(int argc, char *argv[])
 {
-	int			a;
 	t_input		input;
 	pthread_t		*pthread;
 	pthread_mutex_t	*mutex;
@@ -19,9 +18,6 @@ int	main(int argc, char *argv[])
 	if (!check_validation(argc, argv))
 		ft_error(CHECK_VALI);
 	init_input(&input);
-	pthread_mutex_init(mutex, NULL);
-	if (pthread_create(pthread, NULL, start_routine, (void *)&a) < 0)
-	{
-		perror("thread create error");
-	}
+	// 유효성 재검사?
+	make_thread(pthread, mutex);
 }
