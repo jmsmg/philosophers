@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_thread.c                                      :+:      :+:    :+:   */
+/*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/11/16 18:30:44 by seonggoc         ###   ########.fr       */
+/*   Created: 2023/11/16 16:03:08 by seonggoc          #+#    #+#             */
+/*   Updated: 2023/11/16 16:16:03 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*start_routine(void)
+void	error_handler(int	err)
 {
-	pthread_mutex_lock(mutex);
-	pthread_mutex_unlock(mutex);
-}
+	perror("Error");
+	if (err == CHECK_VALI)
+		printf("Fail check_vaildation");
+	else if (err == MUTEX_INIT)
+		printf("Fail pthread_mutex_init");
+	else if (err == MUTEX_CREATE)
+		printf("Fail pthread_mutex_create");
 
-void	make_thread(t_input *input, pthread_t *pthread, pthread_mutex_t *mutex)
-{
-	int	a;
-
-
-	if (pthread_mutex_init(mutex, NULL) != 0)
-		error_handler(MUTEX_INIT);
-	if (pthread_create(pthread, NULL, start_routine, (void *)&a) != 0)
-		error_handler(MUTEX_CREATE);
-	pthread_join(pthread, NULL);
-	pthread_mutex_destroy(mutex);
+	exit (errno);
 }

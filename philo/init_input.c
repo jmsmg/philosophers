@@ -15,7 +15,7 @@ long long	philo_atoi(char	*str)
 	return (result);
 }
 
-void	init_philo(t_input *input, int argc, char **argv)
+void	init_input(t_input *input, int argc, char **argv)
 {
 	input->number_of_philo = philo_atoi(argv[1]);
 	input->time_to_die = philo_atoi(argv[2]);

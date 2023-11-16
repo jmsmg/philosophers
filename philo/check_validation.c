@@ -45,7 +45,7 @@ int	check_isnumber(int argc, char **argv)
 	return (TRUE);
 }
 
-int	check_validation(int argc, char argv)
+int	check_validation(int argc, char **argv)
 {
 	if (!(argc == 5 || argc == 6))
 		return (TRUE);
@@ -53,4 +53,5 @@ int	check_validation(int argc, char argv)
 		return (TRUE);
 	if (!check_range_of_int(argc, argv))
 		return (TRUE);
+	return (FALSE);
 }
