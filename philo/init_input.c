@@ -25,4 +25,6 @@ void	init_input(t_input *input, int argc, char **argv)
 		input->option_must_eat = philo_atoi(argv[5]);
 	else
 		input->option_must_eat = 0;
+	if (input->number_of_philo < 2)
+		error_handler(INVALID_PHILNUM);
 }

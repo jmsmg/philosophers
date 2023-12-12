@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/11/16 18:55:37 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/11/28 11:44:04 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ enum s_error
 {
 	CHECK_VALI,
 	MUTEX_INIT,
-	MUTEX_CREATE
+	MUTEX_CREATE,
+	INVALID_PHILNUM
 };
 
 typedef struct s_input

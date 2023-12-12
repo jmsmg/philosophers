@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/11/16 18:30:44 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/11/28 10:18:58 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	*start_routine(void)
 
 void	make_thread(t_input *input, pthread_t *pthread, pthread_mutex_t *mutex)
 {
-	int	a;
-
+	int	arg;
 
 	if (pthread_mutex_init(mutex, NULL) != 0)
 		error_handler(MUTEX_INIT);
-	if (pthread_create(pthread, NULL, start_routine, (void *)&a) != 0)
+	if (pthread_create(pthread, NULL, start_routine, (void *)&arg) != 0)
 		error_handler(MUTEX_CREATE);
 	pthread_join(pthread, NULL);
 	pthread_mutex_destroy(mutex);

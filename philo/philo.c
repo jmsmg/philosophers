@@ -3,6 +3,7 @@
 int	main(int argc, char *argv[])
 {
 	t_input			input;
+	t_philo			philo;
 	pthread_t		*pthread;
 	pthread_mutex_t	*mutex;
 
