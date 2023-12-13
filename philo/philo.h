@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/11/28 11:44:04 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:05:39 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ typedef struct s_input
 
 typedef struct s_philo
 {
-	int	philo;
-	int	count;
-	int	left;
-	int	right;
-	int	last_eat;
-	int	last_time;
-	int	arg;
+	int			id;
+	int			left;
+	int			right;
+	int			last_eat;
+	int			last_time;
+	pthread_t	thread;
 }	t_philo;
 
 int		check_validation(int argc, char **argv);
