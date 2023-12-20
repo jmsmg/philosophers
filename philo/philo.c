@@ -2,13 +2,13 @@
 
 int	main(int argc, char *argv[])
 {
-	t_input			input;
+	t_arg			arg;
 	t_philo			*philo;
 
 	if (!check_validation(argc, argv))
 		error_handler();
-	init_input(&input, argc, argv);
-	philo = init_philo(&input);
+	init_arg(&arg, argc, argv);
+	philo = init_philo(&arg);
 	// 유효성 재검사?
-	make_thread(&input, pthread, mutex);
+	thread_process(&arg, philo);
 }
