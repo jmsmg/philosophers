@@ -2,24 +2,30 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
-int		a = 0;
 pthread_mutex_t	mutex = PTHREAD_MUTEX_INITIALIZER;
+
+int	get_time()
+{
+	int		time;
+	struct timeval	tp;
+
+	gettimeofday(&tp, NULL);
+	time = 0;
+	printf("gettime : %ld\n", tp.tv_sec);
+	return (time);
+}
+
 void	*start_routine(void *data)
 {
-	int	i;
+	int	time;
+
 	while (*((int *)data) == 99);
-	printf("%d\n", *((int *)data));
 	pthread_mutex_lock(&mutex);
+	time = get_time();
+	printf("data : %d, time: %d\n", *((int *)data), time);
 	pthread_mutex_unlock(&mutex);
-	write(1, (char *)data, 9);
-	i = 0;
-	while (i < 50000)
-	{
-		a++;
-		i++;
-	}
-	printf("data : %s, a: %d\n", (char *)data, a);
 	return (NULL);
 }
 
