@@ -38,7 +38,7 @@ void	make_fork(t_arg *arg)
 		error_handler(MALLOCERR);
 	ft_bzero(arg->fork, sizeof(int) * arg->number_of_philo);
 	arg->state = malloc(sizeof(pthread_mutex_t));
-	if (arg->state)
+	if (!(arg->state))
 		error_handler(MALLOCERR);
 	if (pthread_mutex_init(arg->state, NULL))
 		error_handler(MUTEX_INIT);
@@ -71,5 +71,6 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 		arg->option_must_eat = philo_atoi(argv[5]);
 	else
 		arg->option_must_eat = -1;
+
 	make_fork(arg);
 }

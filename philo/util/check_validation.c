@@ -1,4 +1,4 @@
-#include "philo.h"
+#include "../include/philo.h"
 
 int	check_range_of_int(int argc, char **argv)
 {

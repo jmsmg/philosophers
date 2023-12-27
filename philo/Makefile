@@ -6,7 +6,7 @@
 #    By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/21 09:03:34 by seonggoc          #+#    #+#              #
-#    Updated: 2023/12/27 16:04:30 by seonggoc         ###   ########.fr        #
+#    Updated: 2023/12/27 18:16:49 by seonggoc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,11 @@ SRCS = philo.c \
 		util/check_validation.c \
 		util/error_handler.c \
 		util/util.c \
+		util/libft_util.c
 
 OBJS = $(SRCS:.c=.o)
 CC = CC
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(READLINE_INC) -o $@ -c $<

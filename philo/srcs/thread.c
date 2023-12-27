@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/27 17:08:39 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/27 18:27:14 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,26 @@ void	philo_eat(t_philo *philo)
 {
 	int	i;
 
-	if (philo->id % 2)
-		usleep(1000);
+	// if (philo->id % 2)
+	// 	usleep(1000);
 	i = 0;
-	while (i < )
 	pthread_mutex_lock(philo->arg->state);
-	philo->id
+	if (philo->left == 0)
+		philo->left = 1;
+	printf("hihi\n");
+	// 왼쪽 포크를 잡았습니다.
+	if (philo->right == 0)
+		philo->right = 1;
+	// 오른쪽 포크를 잡았습니다.
 	pthread_mutex_unlock(philo->arg->state);
+	usleep(200);
 }
 
-void	*start_routine(t_philo *philo)
+void	start_routine(t_philo *philo)
 {
-	while (1)
-	{
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
-	}
+	philo_eat(philo);
+	// philo_sleep(philo);
+	// philo_think(philo);
 }
 
 void	thread_process(t_arg *arg, t_philo *philo)
