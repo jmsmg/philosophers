@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
 
 t_philo	*init_philo(t_arg *arg)
 {
@@ -33,17 +33,15 @@ t_philo	*init_philo(t_arg *arg)
 
 void	make_fork(t_arg *arg)
 {
-	int	i;
-
-	i = 0;
-	arg->fork = malloc(sizeof(pthread_mutex_t) * arg->number_of_philo);
+	arg->fork = (int *)malloc(sizeof(int) * arg->number_of_philo);
 	if (!(arg->fork))
 		error_handler(MALLOCERR);
-	while (i < arg->number_of_philo)
-	{
-		pthread_mutex_init(&(arg->fork[i]), NULL);
-		i++;
-	}
+	ft_bzero(arg->fork, sizeof(int) * arg->number_of_philo);
+	arg->state = malloc(sizeof(pthread_mutex_t));
+	if (arg->state)
+		error_handler(MALLOCERR);
+	if (pthread_mutex_init(arg->state, NULL))
+		error_handler(MUTEX_INIT);
 }
 
 long long	philo_atoi(char	*str)
@@ -63,8 +61,6 @@ long long	philo_atoi(char	*str)
 
 void	init_arg(t_arg *arg, int argc, char **argv)
 {
-	pthread_mutex_t	*thread_lock;
-
 	arg->number_of_philo = philo_atoi(argv[1]);
 	if (arg->number_of_philo < 2)
 		error_handler(INVALID_PHILNUM);
@@ -72,13 +68,8 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	arg->time_to_eat = philo_atoi(argv[3]);
 	arg->time_to_sleep = philo_atoi(argv[4]);
 	if (argc == 6)
-		arg->option_must_eat = philo_atoi(argv[5]); // 0일때?
+		arg->option_must_eat = philo_atoi(argv[5]);
 	else
 		arg->option_must_eat = -1;
-	arg->thread_num = 0;
-	arg->thread_lock = malloc(sizeof(pthread_mutex_t));
-	if (arg->thread_lock)
-		error_handler(MALLOCERR);
-	arg->thread_lock = pthread_mutex_init(thread_lock, NULL);
 	make_fork(arg);
 }
