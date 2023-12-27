@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/20 14:44:20 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/22 16:14:20 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_arg
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				start_time;
 	int 			option_must_eat;
 	int				thread_num;
 	pthread_mutex_t	*thread_lock;
@@ -64,4 +65,6 @@ t_philo	*init_philo(t_arg *input);
 
 void	thread_process(t_arg *arg, t_philo *philo);
 
+int		ft_get_time();
+void	philo_printf(int time, int id, char *sentence);
 #endif

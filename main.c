@@ -12,33 +12,40 @@ int	get_time()
 	struct timeval	tp;
 
 	gettimeofday(&tp, NULL);
-	time = 0;
-	printf("gettime : %ld\n", tp.tv_sec);
+	time = tp.tv_sec * 1000000 + tp.tv_usec;
 	return (time);
 }
 
 void	*start_routine(void *data)
 {
-	int	time;
+	int	now;
+	int	curr;
 
-	while (*((int *)data) == 99);
 	pthread_mutex_lock(&mutex);
-	time = get_time();
-	printf("data : %d, time: %d\n", *((int *)data), time);
+	now = get_time();
+	(*(int *)data)++;
 	pthread_mutex_unlock(&mutex);
+	curr = get_time();
+	while (curr < now)
+	{
+		usleep(100);
+	}
+	printf("data : %d\n", *((int *)data));
 	return (NULL);
 }
 
 int	main()
 {
 	int			i;
+	int			j;
 	int			status;
 	pthread_t	pthread[100];
 
 	i = 0;
+	j = 0;
 	while (i < 100)
 	{
-		if (pthread_create(&pthread[i], NULL, &start_routine, (void *)&i) < 0)
+		if (pthread_create(&pthread[i], NULL, &start_routine, (void *)&j) < 0)
 		{
 			return 1;
 		}

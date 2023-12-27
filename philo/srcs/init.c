@@ -24,7 +24,7 @@ t_philo	*init_philo(t_arg *arg)
 		philo[i].id = i + 1;
 		philo[i].left = i;
 		philo[i].right = i + 1 % arg->number_of_philo;
-		philo[i].last_eat = 0;
+		philo[i].last_eat = ft_get_time();
 		philo[i].last_time = 0;
 		i++;
 	}
