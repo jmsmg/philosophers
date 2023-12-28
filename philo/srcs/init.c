@@ -53,7 +53,7 @@ long long	philo_atoi(char	*str)
 	result = 0;
 	while (str[i])
 	{
-		result = str[i] * 10 + '0';
+		result = result * 10 + str[i] - '0';
 		i++;
 	}
 	return (result);

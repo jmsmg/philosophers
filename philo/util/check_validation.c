@@ -13,12 +13,12 @@ int	check_range_of_int(int argc, char **argv)
 		tmp = 0;
 		while (argv[i][j])
 		{
-			if (2147483647 < tmp)
-			{
-				return (FALSE);
-			}
-			tmp = argv[i][j] * 10 + '0';
+			tmp = tmp * 10 + argv[i][j] - '0';
 			j++;
+		}
+		if (2147483647 < tmp)
+		{
+			return (FALSE);
 		}
 		i++;
 	}
@@ -31,13 +31,15 @@ int	check_isnumber(int argc, char **argv)
 	int	j;
 
 	i = 1;
-	j = 0;
 	while (i < argc)
 	{
+		j = 0;
 		while (argv[i][j])
 		{
 			if (argv[i][j] < '0' || '9' < argv[i][j])
+			{
 				return (FALSE);
+			}
 			j++;
 		}
 		i++;
