@@ -23,7 +23,7 @@ t_philo	*init_philo(t_arg *arg)
 	{
 		philo[i].id = i + 1;
 		philo[i].left = i;
-		philo[i].right = i + 1 % arg->number_of_philo;
+		philo[i].right = (i + 1) % arg->number_of_philo;
 		philo[i].last_eat = ft_get_time();
 		philo[i].last_time = 0;
 		i++;
@@ -71,5 +71,8 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 		arg->option_must_eat = philo_atoi(argv[5]);
 	else
 		arg->option_must_eat = -1;
+	arg->die = 1;
 	make_fork(arg);
+	if (pthread_mutex_init(arg->print, NULL))
+		error_handler(MUTEX_INIT);
 }
