@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/28 18:42:05 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/28 21:21:37 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,19 @@
 
 void	philo_eat(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	while (philo->arg->fork[philo->left]);
 	pthread_mutex_lock(&(philo->arg->state[philo->left]));
 	philo->arg->fork[philo->left] = 1;
+	philo_printf(philo->arg, philo->id, "pick up left fork\n");
 
 
+	pthread_mutex_lock(&(philo->arg->state[philo->right]));
+	philo->arg->fork[philo->right] = 1;
+	philo_printf(philo->arg, philo->id, "pick up right fork\n");
+	philo_printf(philo->arg, philo->id, "eat\n");
+	// 시간 측정
 
+	philo->arg->fork[philo->right] = 0;
+	pthread_mutex_unlock(&(philo->arg->state[philo->right]));
 	philo->arg->fork[philo->left] = 0;
 	pthread_mutex_unlock(&(philo->arg->state[philo->left]));
 	usleep(200);
@@ -48,7 +52,6 @@ void	start_routine(t_philo *philo)
 		// philo_sleep(philo);
 		// philo_think(philo);
 	}
-	printf("%d\n", philo->arg->die);
 }
 
 void	thread_process(t_arg *arg, t_philo *philo)
@@ -70,4 +73,17 @@ void	thread_process(t_arg *arg, t_philo *philo)
 			error_handler(MUTEX_CREATE);
 		i++;
 	}
+	// all_free_destroy();
+	pthread_mutex_destroy(arg->print);
+	free(arg->print);
+	int	j;
+
+	j = 0;
+	while (i < arg->number_of_philo)
+	{
+		pthread_mutex_destroy(&arg->state[i]);
+		j++;
+	}
+	free(arg->state);
+	exit(1);
 }

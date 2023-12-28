@@ -34,6 +34,9 @@ t_philo	*init_philo(t_arg *arg)
 
 void	make_fork(t_arg *arg)
 {
+	int	i;
+
+	i = 0;
 	arg->fork = malloc(sizeof(int) * arg->number_of_philo);
 	if (!(arg->fork))
 		error_handler(MALLOCERR);
@@ -41,8 +44,12 @@ void	make_fork(t_arg *arg)
 	arg->state = malloc(sizeof(pthread_mutex_t) * arg->number_of_philo);
 	if (!(arg->state))
 		error_handler(MALLOCERR);
-	if (pthread_mutex_init(arg->state, NULL))
-		error_handler(MUTEX_INIT);
+	while (i < arg->number_of_philo)
+	{
+		if (pthread_mutex_init(&(arg->state[i]), NULL))
+			error_handler(MUTEX_INIT);
+		i++;
+	}
 }
 
 long long	philo_atoi(char	*str)
