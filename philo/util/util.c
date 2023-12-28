@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/28 16:00:22 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:22:29 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int ft_get_time()
 
 void	philo_printf(t_arg *arg, int id, char *sentence)
 {
-	pthread_mutex_lock(&arg->print);
+	pthread_mutex_lock(arg->print);
 	printf("%d %d %s", ft_get_time(), id, sentence);
-	pthread_mutex_unlock(&arg->print);
+	pthread_mutex_unlock(arg->print);
 }

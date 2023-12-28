@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/28 16:41:37 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/28 18:42:05 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->arg->state[philo->left]));
 	philo->arg->fork[philo->left] = 1;
 
+
+
 	philo->arg->fork[philo->left] = 0;
 	pthread_mutex_unlock(&(philo->arg->state[philo->left]));
 	usleep(200);
@@ -43,9 +45,10 @@ void	start_routine(t_philo *philo)
 	while (philo->arg->die)
 	{
 		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
+		// philo_sleep(philo);
+		// philo_think(philo);
 	}
+	printf("%d\n", philo->arg->die);
 }
 
 void	thread_process(t_arg *arg, t_philo *philo)

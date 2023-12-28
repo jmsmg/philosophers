@@ -26,6 +26,7 @@ t_philo	*init_philo(t_arg *arg)
 		philo[i].right = (i + 1) % arg->number_of_philo;
 		philo[i].last_eat = ft_get_time();
 		philo[i].last_time = 0;
+		philo[i].arg = arg;
 		i++;
 	}
 	return (philo);
@@ -61,6 +62,8 @@ long long	philo_atoi(char	*str)
 
 void	init_arg(t_arg *arg, int argc, char **argv)
 {
+	pthread_mutex_t	*print;
+
 	arg->number_of_philo = philo_atoi(argv[1]);
 	if (arg->number_of_philo < 2)
 		error_handler(INVALID_PHILNUM);
@@ -73,6 +76,10 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 		arg->option_must_eat = -1;
 	arg->die = 1;
 	make_fork(arg);
+	print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	if (!print)
+		error_handler(MALLOCERR);
+	arg->print = print;
 	if (pthread_mutex_init(arg->print, NULL))
 		error_handler(MUTEX_INIT);
 }
