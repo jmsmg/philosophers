@@ -42,12 +42,12 @@ void	make_fork(t_arg *arg)
 	if (!(arg->fork))
 		error_handler(MALLOCERR);
 	ft_bzero(arg->fork, sizeof(int) * arg->number_of_philo);
-	arg->state = malloc(sizeof(pthread_mutex_t) * arg->number_of_philo);
-	if (!(arg->state))
+	arg->pick = malloc(sizeof(pthread_mutex_t) * arg->number_of_philo);
+	if (!(arg->pick))
 		error_handler(MALLOCERR);
 	while (i < arg->number_of_philo)
 	{
-		if (pthread_mutex_init(&(arg->state[i]), NULL))
+		if (pthread_mutex_init(&(arg->pick[i]), NULL))
 			error_handler(MUTEX_INIT);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 13:02:33 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 16:42:38 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_arg
 	long long		start_time;
 	int				die;
 	int				*fork;
-	pthread_mutex_t	*state;
+	pthread_mutex_t	*pick;
 	pthread_mutex_t	*print;
 }	t_arg;
 
@@ -63,7 +63,7 @@ void		init_arg(t_arg *input, int argc, char **argv);
 
 t_philo		*init_philo(t_arg *input);
 
-void		thread_process(t_arg *arg, t_philo *philo);
+pthread_t	*thread_process(t_arg *arg, t_philo *philo);
 
 void		ft_wait_time(t_arg *arg, long long time);
 void		philo_printf(t_arg *arg, int id, char *sentence);
@@ -72,4 +72,7 @@ long long	ft_get_time(void);
 void		ft_bzero(void *s, size_t n);
 
 void		error_handler(int err);
+
+void		monitor(t_arg *arg, t_philo *philo);
+void		free_all(t_arg *arg, t_philo *philo, pthread_t *thread);
 #endif
