@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 16:04:55 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 16:42:54 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 18:44:24 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ int	main(int argc, char *argv[])
 	init_arg(&arg, argc, argv);
 	philo = init_philo(&arg);
 	thread = thread_process(&arg, philo);
-	// monitor(&arg, philo);
 	free_all(&arg, philo, thread);
 }

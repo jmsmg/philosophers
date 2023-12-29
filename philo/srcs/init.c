@@ -24,9 +24,8 @@ t_philo	*init_philo(t_arg *arg)
 		philo[i].id = i + 1;
 		philo[i].left = i;
 		philo[i].right = (i + 1) % arg->number_of_philo;
-		philo[i].last_eat = ft_get_time();
+		philo[i].last_eat = get_time();
 		philo[i].eat_cnt = 0;
-		philo[i].last_time = 0;
 		philo[i].arg = arg;
 		i++;
 	}
@@ -75,15 +74,15 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	arg->number_of_philo = philo_atoi(argv[1]);
 	if (arg->number_of_philo < 2)
 		error_handler(INVALID_PHILNUM);
-	arg->time_to_die = philo_atoi(argv[2]);
+	arg->time_to_alive = philo_atoi(argv[2]);
 	arg->time_to_eat = philo_atoi(argv[3]);
 	arg->time_to_sleep = philo_atoi(argv[4]);
 	if (argc == 6)
 		arg->option_must_eat = philo_atoi(argv[5]);
 	else
 		arg->option_must_eat = -1;
-	arg->start_time = ft_get_time();
-	arg->die = 1;
+	arg->start_time = get_time();
+	arg->alive = 1;
 	make_fork(arg);
 	print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	if (!print)

@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 16:42:31 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 19:17:32 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@
 
 void	philo_sleep(t_philo *philo)
 {
-	if (philo->arg->die)
+	if (philo->arg->alive)
 	{
 		return ;
 	}
 	philo_printf(philo->arg, philo->id, "is sleeping\n");
-	ft_wait_time(philo->arg, philo->arg->time_to_sleep);
+	ft_wait_time(philo, philo->arg->time_to_sleep);
 }
 
 void	philo_eat(t_philo *philo)
 {
-	printf("id : %d\n", philo->id);
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
 	if (philo->arg->fork[philo->left])
 	{
@@ -46,21 +45,21 @@ void	philo_eat(t_philo *philo)
 
 	philo_printf(philo->arg, philo->id, "has taken a right fork\n");
 	philo_printf(philo->arg, philo->id, "is eating\n");
-
-	ft_wait_time(philo->arg, philo->arg->time_to_eat);
+	ft_wait_time(philo, philo->arg->time_to_eat);
 
 	philo->arg->fork[philo->right] = 0;
 	pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
 	philo->arg->fork[philo->left] = 0;
 	pthread_mutex_unlock(&(philo->arg->pick[philo->left]));
+	philo->eat_cnt++;
 	usleep(100);
 }
 
 void	start_routine(t_philo *philo)
 {
-	// if (philo->id % 2 == 0)
-	// 	usleep(1000);
-	while (philo->arg->die)
+	if (philo->id % 2 == 0)
+		usleep(1000);
+	while (philo->arg->alive)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
@@ -83,5 +82,6 @@ pthread_t	*thread_process(t_arg *arg, t_philo *philo)
 			error_handler(MUTEX_CREATE);
 		i++;
 	}
+	// monitor(arg, philo);
 	return (thread);
 }
