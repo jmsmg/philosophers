@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 12:14:06 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 13:04:04 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	thread_process(t_arg *arg, t_philo *philo)
 	int			i;
 	pthread_t	thread[arg->number_of_philo];
 
+	// 쓰레드 동적할당
 	i = 0;
 	while (i < arg->number_of_philo)
 	{

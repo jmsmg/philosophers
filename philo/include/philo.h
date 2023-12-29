@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 10:53:40 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 13:02:33 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define TRUE 1
 # define FALSE 0
 
-enum s_error
+enum e_error
 {
 	CHECK_VALI,
 	MUTEX_INIT,
@@ -38,13 +38,13 @@ typedef struct s_arg
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int 			option_must_eat;
-	int				start_time;
+	int				option_must_eat;
+	long long		start_time;
 	int				die;
 	int				*fork;
 	pthread_mutex_t	*state;
 	pthread_mutex_t	*print;
-} t_arg;
+}	t_arg;
 
 typedef struct s_philo
 {
@@ -57,19 +57,19 @@ typedef struct s_philo
 	t_arg		*arg;
 }	t_philo;
 
-int		check_validation(int argc, char **argv);
+int			check_validation(int argc, char **argv);
 
-void	init_arg(t_arg *input, int argc, char **argv);
+void		init_arg(t_arg *input, int argc, char **argv);
 
-t_philo	*init_philo(t_arg *input);
+t_philo		*init_philo(t_arg *input);
 
-void	thread_process(t_arg *arg, t_philo *philo);
+void		thread_process(t_arg *arg, t_philo *philo);
 
-void	ft_wait_time(t_arg *arg, int time);
-int		ft_get_time(void);
-void	philo_printf(t_arg *arg, int id, char *sentence);
+void		ft_wait_time(t_arg *arg, long long time);
+void		philo_printf(t_arg *arg, int id, char *sentence);
+long long	ft_get_time(void);
 
-void	ft_bzero(void *s, size_t n);
+void		ft_bzero(void *s, size_t n);
 
-void	error_handler(int	err);
+void		error_handler(int err);
 #endif
