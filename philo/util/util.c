@@ -6,11 +6,22 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/28 18:22:29 by seonggoc         ###   ########.fr       */
+/*   Updated: 2023/12/29 11:29:41 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
+
+void	ft_wait_time(t_arg *arg, int time)
+{
+	int	start;
+
+	start = ft_get_time();
+	while (arg->die && ft_get_time() - start <= time)
+	{
+		usleep(10);
+	}
+}
 
 int ft_get_time()
 {
@@ -18,7 +29,7 @@ int ft_get_time()
 	struct timeval	tp;
 
 	gettimeofday(&tp, NULL);
-	time = tp.tv_sec * 1000000 + tp.tv_usec;
+	time = tp.tv_usec;
 	time /= 1000;
 	return (time);
 }
@@ -26,6 +37,6 @@ int ft_get_time()
 void	philo_printf(t_arg *arg, int id, char *sentence)
 {
 	pthread_mutex_lock(arg->print);
-	printf("%d %d %s", ft_get_time(), id, sentence);
+	printf("%d %d %s", ft_get_time() - arg->start_time, id, sentence);
 	pthread_mutex_unlock(arg->print);
 }
