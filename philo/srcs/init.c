@@ -88,8 +88,6 @@ long long	philo_atoi(char	*str)
 
 void	init_arg(t_arg *arg, int argc, char **argv)
 {
-	pthread_mutex_t	*print;
-
 	arg->number_of_philo = philo_atoi(argv[1]);
 	arg->time_to_alive = philo_atoi(argv[2]);
 	arg->time_to_eat = philo_atoi(argv[3]);
@@ -101,10 +99,5 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	arg->start_time = get_time();
 	arg->alive = 1;
 	make_fork(arg);
-	print = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	if (!print)
-		error_handler(MALLOCERR);
-	arg->print = print;
-	if (pthread_mutex_init(arg->print, NULL))
-		error_handler(MUTEX_INIT);
+	make_mutex(arg);
 }
