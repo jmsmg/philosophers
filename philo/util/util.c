@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 18:49:54 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 19:53:48 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	ft_wait_time(t_philo *philo, long long time)
 	}
 }
 
-long long	get_time()
+long long	get_time(void)
 {
+	long long		time;
 	struct timeval	tp;
-	long long	time;
 
 	gettimeofday(&tp, NULL);
 	time = (tp.tv_sec * 1000000) + tp.tv_usec;
@@ -39,7 +39,7 @@ long long	get_time()
 
 void	philo_printf(t_arg *arg, int id, char *sentence)
 {
-	int flag;
+	int	flag;
 
 	pthread_mutex_lock(arg->alive_mutex);
 	flag = arg->alive;

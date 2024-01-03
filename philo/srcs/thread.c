@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 19:12:37 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 20:41:23 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ void	philo_think(t_philo *philo)
 
 void	philo_sleep(t_philo *philo)
 {
+	long long	start;
+
+	start = get_time();
 	philo_printf(philo->arg, philo->id, "is sleeping\n");
-	ft_wait_time(philo, philo->arg->time_to_sleep);
+	while (get_time() - start <= philo->arg->time_to_sleep)
+	{
+		usleep(10);
+	}
 }
 
 void	philo_eat(t_philo *philo)
 {
-
-
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
 	philo->arg->fork[philo->left] = 1;
 	philo_printf(philo->arg, philo->id, "has taken a fork\n");
@@ -51,9 +55,16 @@ void	start_routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep(1000);
+
 	while (1)
 	{
-
+		pthread_mutex_lock(philo->arg->alive_mutex);
+		if (!philo->arg->alive)
+		{
+			pthread_mutex_unlock(philo->arg->alive_mutex);
+			break;
+		}
+		pthread_mutex_unlock(philo->arg->alive_mutex);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);

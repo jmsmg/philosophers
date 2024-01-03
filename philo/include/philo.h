@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 16:41:18 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 20:27:40 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum e_error
 typedef struct s_arg
 {
 	int				number_of_philo;
-	int				time_to_alive;
+	long long		time_to_alive;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				option_must_eat;
@@ -54,8 +54,8 @@ typedef struct s_philo
 	int			id;
 	int			left;
 	int			right;
-	int			last_eat;
 	int			eat_cnt;
+	long long	last_eat;
 	t_arg		*arg;
 }	t_philo;
 
