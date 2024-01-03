@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 12:45:41 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 19:17:32 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 14:01:10 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	monitor(t_arg *arg, t_philo *philo)
 
 	while (arg->alive)
 	{
-		if (philo[i].eat_cnt == arg->option_must_eat)
+		if ((&philo[i])->eat_cnt == arg->option_must_eat)
 		{
 			arg->alive = 0;
 			break ;
@@ -55,7 +55,7 @@ void	monitor(t_arg *arg, t_philo *philo)
 			if (arg->time_to_alive <= (now - (&philo[i])->last_eat))
 			{
 				arg->alive = 0;
-				philo_printf((&philo[i])->arg, (&philo[i])->id, "alived\n");
+				philo_printf((&philo[i])->arg, (&philo[i])->id, "died\n");
 				break ;
 			}
 			i++;

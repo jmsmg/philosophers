@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 12:13:44 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:33:53 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ pthread_t	*thread_process(t_arg *arg, t_philo *philo)
 			error_handler(MUTEX_CREATE);
 		i++;
 	}
-	// monitor(arg, philo);
+	monitor(arg, philo);
 	return (thread);
 }

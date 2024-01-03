@@ -37,7 +37,6 @@ void	make_mutex(t_arg *arg)
 	pthread_mutex_t	*time;
 	pthread_mutex_t	*print;
 
-
 	time = malloc(sizeof(pthread_mutex_t));
 	if (!time)
 		error_handler(MALLOCERR);
