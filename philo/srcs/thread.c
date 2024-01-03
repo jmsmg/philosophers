@@ -6,20 +6,24 @@
 /*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 09:56:51 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:13:44 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-// void	philo_think()
-// {
-
-// }
+void	philo_think(t_philo *philo)
+{
+	if (!philo->arg->alive)
+	{
+		return ;
+	}
+	philo_printf(philo->arg, philo->id, "is thinking\n");
+}
 
 void	philo_sleep(t_philo *philo)
 {
-	if (philo->arg->alive)
+	if (!philo->arg->alive)
 	{
 		return ;
 	}
@@ -59,7 +63,7 @@ void	start_routine(t_philo *philo)
 	{
 		philo_eat(philo);
 		philo_sleep(philo);
-		// philo_think(philo);
+		philo_think(philo);
 	}
 }
 
