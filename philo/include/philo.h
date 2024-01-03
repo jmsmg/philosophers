@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 09:15:59 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:41:18 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ typedef struct s_arg
 	long long		start_time;
 	int				alive;
 	int				*fork;
+	pthread_mutex_t	*alive_mutex;
 	pthread_mutex_t	*pick;
-	pthread_mutex_t	*time;
+	pthread_mutex_t	*last_eat;
+	pthread_mutex_t	*eat_cnt;
 	pthread_mutex_t	*print;
 }	t_arg;
 

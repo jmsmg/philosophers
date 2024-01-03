@@ -34,20 +34,27 @@ t_philo	*init_philo(t_arg *arg)
 
 void	make_mutex(t_arg *arg)
 {
-	pthread_mutex_t	*time;
+	pthread_mutex_t	*last_eat;
+	pthread_mutex_t	*eat_cnt;
 	pthread_mutex_t	*print;
 
-	time = malloc(sizeof(pthread_mutex_t));
-	if (!time)
+	last_eat = malloc(sizeof(pthread_mutex_t));
+	if (!last_eat)
+		error_handler(MALLOCERR);
+	eat_cnt = malloc(sizeof(pthread_mutex_t));
+	if (!eat_cnt)
 		error_handler(MALLOCERR);
 	print = malloc(sizeof(pthread_mutex_t));
 	if (!print)
 		error_handler(MALLOCERR);
-	if (pthread_mutex_init(time, NULL))
+	if (pthread_mutex_init(eat_cnt, NULL))
+		error_handler(MUTEX_INIT);
+	if (pthread_mutex_init(last_eat, NULL))
 		error_handler(MUTEX_INIT);
 	if (pthread_mutex_init(print, NULL))
 		error_handler(MUTEX_INIT);
-	arg->time = time;
+	arg->last_eat = last_eat;
+	arg->eat_cnt = eat_cnt;
 	arg->print = print;
 }
 
@@ -88,6 +95,8 @@ long long	philo_atoi(char	*str)
 
 void	init_arg(t_arg *arg, int argc, char **argv)
 {
+	pthread_mutex_t	*alive_mutex;
+
 	arg->number_of_philo = philo_atoi(argv[1]);
 	arg->time_to_alive = philo_atoi(argv[2]);
 	arg->time_to_eat = philo_atoi(argv[3]);
@@ -100,4 +109,8 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	arg->alive = 1;
 	make_fork(arg);
 	make_mutex(arg);
+	alive_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!alive_mutex)
+		error_handler(MUTEX_INIT);
+	arg->alive_mutex = alive_mutex;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 09:32:31 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:00:12 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ void	ft_wait_time(t_philo *philo, long long time)
 	long long	start;
 
 	start = get_time();
-	pthread_mutex_lock(philo->arg->time);
+	pthread_mutex_lock(philo->arg->last_eat);
 	philo->last_eat = start;
-	while (philo->arg->alive && get_time() - start <= time)
+	pthread_mutex_unlock(philo->arg->last_eat);
+	while (get_time() - start <= time)
 	{
 		usleep(10);
 	}
-	pthread_mutex_unlock(philo->arg->time);
 }
 
 long long	get_time()
@@ -39,6 +39,7 @@ long long	get_time()
 
 void	philo_printf(t_arg *arg, int id, char *sentence)
 {
+	pthread_mutex_lock(arg->alive);
 	pthread_mutex_lock(arg->print);
 	printf("%lld %d %s", get_time() - arg->start_time, id, sentence);
 	pthread_mutex_unlock(arg->print);
