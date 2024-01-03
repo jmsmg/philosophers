@@ -32,6 +32,26 @@ t_philo	*init_philo(t_arg *arg)
 	return (philo);
 }
 
+void	make_mutex(t_arg *arg)
+{
+	pthread_mutex_t	*time;
+	pthread_mutex_t	*print;
+
+
+	time = malloc(sizeof(pthread_mutex_t));
+	if (!time)
+		error_handler(MALLOCERR);
+	print = malloc(sizeof(pthread_mutex_t));
+	if (!print)
+		error_handler(MALLOCERR);
+	if (pthread_mutex_init(time, NULL))
+		error_handler(MUTEX_INIT);
+	if (pthread_mutex_init(print, NULL))
+		error_handler(MUTEX_INIT);
+	arg->time = time;
+	arg->print = print;
+}
+
 void	make_fork(t_arg *arg)
 {
 	int	i;
@@ -72,8 +92,6 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	pthread_mutex_t	*print;
 
 	arg->number_of_philo = philo_atoi(argv[1]);
-	if (arg->number_of_philo < 2)
-		error_handler(INVALID_PHILNUM);
 	arg->time_to_alive = philo_atoi(argv[2]);
 	arg->time_to_eat = philo_atoi(argv[3]);
 	arg->time_to_sleep = philo_atoi(argv[4]);

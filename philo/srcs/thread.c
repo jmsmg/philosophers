@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: seonggoc <seonggoc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2023/12/29 19:17:32 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 09:56:51 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,24 @@ void	philo_sleep(t_philo *philo)
 void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
-	if (philo->arg->fork[philo->left])
-	{
-		write(1, "left dead lock!!\n", 12);
-	}
 	philo->arg->fork[philo->left] = 1;
 	philo_printf(philo->arg, philo->id, "has taken a left fork\n");
-	pthread_mutex_lock(&(philo->arg->pick[philo->right]));
-	if (philo->arg->fork[philo->right])
+	if (philo->left == philo->right)
 	{
-		write(1, "right dead lock!!\n", 12);
+		philo->arg->alive = 0;
+		pthread_mutex_unlock(&(philo->arg->pick[philo->left]));
+		return ;
 	}
+	pthread_mutex_lock(&(philo->arg->pick[philo->right]));
 	philo->arg->fork[philo->right] = 1;
-
 	philo_printf(philo->arg, philo->id, "has taken a right fork\n");
 	philo_printf(philo->arg, philo->id, "is eating\n");
+	philo->eat_cnt++;
 	ft_wait_time(philo, philo->arg->time_to_eat);
-
 	philo->arg->fork[philo->right] = 0;
 	pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
 	philo->arg->fork[philo->left] = 0;
 	pthread_mutex_unlock(&(philo->arg->pick[philo->left]));
-	philo->eat_cnt++;
 	usleep(100);
 }
 
