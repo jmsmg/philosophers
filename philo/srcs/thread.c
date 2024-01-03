@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 16:59:12 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/03 19:12:37 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ void	philo_sleep(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
+
+
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
 	philo->arg->fork[philo->left] = 1;
-	philo_printf(philo->arg, philo->id, "has taken a left fork\n");
+	philo_printf(philo->arg, philo->id, "has taken a fork\n");
 	if (philo->left != philo->right)
 	{
 		pthread_mutex_lock(&(philo->arg->pick[philo->right]));
 		philo->arg->fork[philo->right] = 1;
-		philo_printf(philo->arg, philo->id, "has taken a right fork\n");
+		philo_printf(philo->arg, philo->id, "has taken a fork\n");
 		philo_printf(philo->arg, philo->id, "is eating\n");
 		pthread_mutex_lock(philo->arg->eat_cnt);
 		philo->eat_cnt++;
@@ -43,7 +45,6 @@ void	philo_eat(t_philo *philo)
 		philo->arg->fork[philo->left] = 0;
 	}
 	pthread_mutex_unlock(&(philo->arg->pick[philo->left]));
-	usleep(100);
 }
 
 void	start_routine(t_philo *philo)
@@ -52,10 +53,9 @@ void	start_routine(t_philo *philo)
 		usleep(1000);
 	while (1)
 	{
+
 		philo_eat(philo);
-		// die???
 		philo_sleep(philo);
-		// die???
 		philo_think(philo);
 	}
 }

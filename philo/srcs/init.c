@@ -110,6 +110,7 @@ void	init_arg(t_arg *arg, int argc, char **argv)
 	make_fork(arg);
 	make_mutex(arg);
 	alive_mutex = malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(alive_mutex, NULL);
 	if (!alive_mutex)
 		error_handler(MUTEX_INIT);
 	arg->alive_mutex = alive_mutex;
