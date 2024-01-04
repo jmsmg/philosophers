@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 11:11:15 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:39:30 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	philo_eat(t_philo *philo)
 		philo->arg->fork[philo->right] = 1;
 		philo_printf(philo->arg, philo->id, "has taken a fork\n");
 		philo_printf(philo->arg, philo->id, "is eating\n");
-		ft_wait_time(philo, philo->arg->time_to_eat);
 		pthread_mutex_lock(philo->arg->eat_cnt);
 		philo->eat_cnt++;
 		pthread_mutex_unlock(philo->arg->eat_cnt);
+		ft_wait_time(philo, philo->arg->time_to_eat);
 		philo->arg->fork[philo->right] = 0;
 		pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
 		philo->arg->fork[philo->left] = 0;
@@ -69,7 +69,7 @@ void	start_routine(t_philo *philo)
 		philo_sleep(philo);
 		philo_think(philo);
 		pthread_mutex_lock(philo->arg->eat_cnt);
-		if (philo->eat_cnt == philo->arg->number_of_philo)
+		if (philo->eat_cnt == philo->arg->option_must_eat)
 		{
 			pthread_mutex_unlock(philo->arg->eat_cnt);
 			break ;

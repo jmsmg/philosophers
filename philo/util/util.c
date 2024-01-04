@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 10:29:08 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:27:07 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ void	ft_wait_time(t_philo *philo, long long time)
 	philo->last_eat = start;
 	pthread_mutex_unlock(philo->arg->last_eat);
 	while (get_time() - start <= time)
-	{
 		usleep(10);
-	}
 }
 
 long long	get_time(void)

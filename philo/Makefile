@@ -6,7 +6,7 @@
 #    By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/21 09:03:34 by seonggoc          #+#    #+#              #
-#    Updated: 2024/01/03 16:20:38 by seonggoc         ###   ########.fr        #
+#    Updated: 2024/01/04 11:47:06 by seonggoc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRCS = philo.c \
 
 OBJS = $(SRCS:.c=.o)
 CC = CC
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(READLINE_INC) -o $@ -c $<
