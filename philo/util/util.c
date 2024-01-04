@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 19:53:48 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 09:37:11 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void	philo_printf(t_arg *arg, int id, char *sentence)
 	pthread_mutex_unlock(arg->alive_mutex);
 	if (flag == 0)
 	{
+		// pthread_mutex_lock(arg->print);
+		// printf("%lld %d %s", get_time() - arg->start_time, id, sentence);
+		// pthread_mutex_unlock(arg->print);
 		return ;
 	}
 	pthread_mutex_lock(arg->print);

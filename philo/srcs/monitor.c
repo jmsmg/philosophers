@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 12:45:41 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 20:37:36 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 09:40:10 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ void	monitor(t_arg *arg, t_philo *philo)
 		while (i < arg->number_of_philo)
 		{
 			now = get_time();
+			pthread_mutex_lock(philo->arg->eat_cnt);
+			if (philo->eat_cnt == philo->arg->option_must_eat)
+			{
+				pthread_mutex_lock(philo->arg->alive_mutex);
+				arg->alive = 0;
+				pthread_mutex_unlock(philo->arg->alive_mutex);
+				philo_printf((&philo[i])->arg, (&philo[i])->id, "died\n");
+				printf("died\n");
+			}
+			pthread_mutex_unlock(philo->arg->eat_cnt);
 			pthread_mutex_lock(philo->arg->last_eat);
 			eat = philo[i].last_eat;
 			pthread_mutex_unlock(philo->arg->last_eat);
