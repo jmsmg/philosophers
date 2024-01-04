@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 10:54:19 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:11:15 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	start_routine(t_philo *philo)
 		usleep(1000);
 	while (ft_check_philo_state(philo->arg))
 	{
+		philo_eat(philo);
+		philo_sleep(philo);
+		philo_think(philo);
 		pthread_mutex_lock(philo->arg->eat_cnt);
 		if (philo->eat_cnt == philo->arg->number_of_philo)
 		{
@@ -72,9 +75,6 @@ void	start_routine(t_philo *philo)
 			break ;
 		}
 		pthread_mutex_unlock(philo->arg->eat_cnt);
-		philo_eat(philo);
-		philo_sleep(philo);
-		philo_think(philo);
 	}
 }
 
