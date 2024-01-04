@@ -6,7 +6,7 @@
 #    By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/21 09:03:34 by seonggoc          #+#    #+#              #
-#    Updated: 2024/01/04 11:47:06 by seonggoc         ###   ########.fr        #
+#    Updated: 2024/01/04 12:20:27 by seonggoc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS = philo.c \
 		util/check_validation.c \
 		util/error_handler.c \
 		util/util.c \
-		util/libft_util.c
+		util/libft_util.c \
+		util/all_free.c
 
 OBJS = $(SRCS:.c=.o)
 CC = CC

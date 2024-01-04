@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 11:39:30 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:25:12 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,17 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
 	philo->arg->fork[philo->left] = 1;
 	philo_printf(philo->arg, philo->id, "has taken a fork\n");
-	if (philo->arg->number_of_philo != 1)
-	{
-		pthread_mutex_lock(&(philo->arg->pick[philo->right]));
-		philo->arg->fork[philo->right] = 1;
-		philo_printf(philo->arg, philo->id, "has taken a fork\n");
-		philo_printf(philo->arg, philo->id, "is eating\n");
-		pthread_mutex_lock(philo->arg->eat_cnt);
-		philo->eat_cnt++;
-		pthread_mutex_unlock(philo->arg->eat_cnt);
-		ft_wait_time(philo, philo->arg->time_to_eat);
-		philo->arg->fork[philo->right] = 0;
-		pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
-		philo->arg->fork[philo->left] = 0;
-	}
+	pthread_mutex_lock(&(philo->arg->pick[philo->right]));
+	philo->arg->fork[philo->right] = 1;
+	philo_printf(philo->arg, philo->id, "has taken a fork\n");
+	philo_printf(philo->arg, philo->id, "is eating\n");
+	pthread_mutex_lock(philo->arg->eat_cnt);
+	philo->eat_cnt++;
+	pthread_mutex_unlock(philo->arg->eat_cnt);
+	ft_wait_time(philo, philo->arg->time_to_eat);
+	philo->arg->fork[philo->right] = 0;
+	pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
+	philo->arg->fork[philo->left] = 0;
 	pthread_mutex_unlock(&(philo->arg->pick[philo->left]));
 }
 
@@ -65,6 +62,11 @@ void	start_routine(t_philo *philo)
 		usleep(1000);
 	while (ft_check_philo_state(philo->arg))
 	{
+		if (philo->arg->number_of_philo == 1)
+		{
+			philo_printf(philo->arg, philo->id, "has taken a fork\n");
+			break ;
+		}
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
@@ -81,18 +83,18 @@ void	start_routine(t_philo *philo)
 pthread_t	*thread_process(t_arg *arg, t_philo *philo)
 {
 	int			i;
-	pthread_t	*thread;
+	pthread_t	*t;
 
-	thread = malloc(sizeof(pthread_t) * arg->number_of_philo);
-	if (!thread)
+	t = malloc(sizeof(pthread_t) * arg->number_of_philo);
+	if (!t)
 		error_handler(MALLOCERR);
 	i = 0;
 	while (i < arg->number_of_philo)
 	{
-		if (pthread_create((&thread[i]), NULL, (void *)start_routine, &philo[i]))
+		if (pthread_create((&t[i]), NULL, (void *)start_routine, &philo[i]))
 			error_handler(MUTEX_CREATE);
 		i++;
 	}
 	monitor(arg, philo);
-	return (thread);
+	return (t);
 }

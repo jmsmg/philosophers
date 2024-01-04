@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 12:31:33 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 11:27:07 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:13:49 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	ft_kill_philo(t_arg *arg)
 	arg->alive = 0;
 	pthread_mutex_unlock(arg->alive_mutex);
 }
+
 int	ft_check_philo_state(t_arg *arg)
 {
 	pthread_mutex_lock(arg->alive_mutex);

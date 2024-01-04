@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 10:24:37 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:17:24 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void		ft_bzero(void *s, size_t n);
 void		error_handler(int err);
 
 void		monitor(t_arg *arg, t_philo *philo);
+
 void		free_all(t_arg *arg, t_philo *philo, pthread_t *thread);
 #endif

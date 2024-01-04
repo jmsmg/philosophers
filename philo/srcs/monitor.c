@@ -6,40 +6,22 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 12:45:41 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 11:50:39 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:20:06 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	free_all(t_arg *arg, t_philo *philo, pthread_t *thread)
+int	ft_check_eat_cnt(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	while (i < arg->number_of_philo)
+	pthread_mutex_lock(philo->arg->eat_cnt);
+	if (philo->eat_cnt == philo->arg->option_must_eat)
 	{
-		if (pthread_join(thread[i], NULL))
-			error_handler(MUTEX_CREATE);
-		i++;
+		pthread_mutex_unlock(philo->arg->eat_cnt);
+		return (FALSE);
 	}
-	pthread_mutex_destroy(arg->alive_mutex);
-	pthread_mutex_destroy(arg->last_eat);
-	pthread_mutex_destroy(arg->eat_cnt);
-	pthread_mutex_destroy(arg->print);
-	i = 0;
-	while (i < arg->number_of_philo)
-	{
-		pthread_mutex_destroy(&arg->pick[i]);
-		i++;
-	}
-	free(arg->fork);
-	free(arg->pick);
-	free(arg->alive_mutex);
-	free(arg->eat_cnt);
-	free(arg->last_eat);
-	free(arg->print);
-	free(philo);
+	pthread_mutex_unlock(philo->arg->eat_cnt);
+	return (TRUE);
 }
 
 void	monitor(t_arg *arg, t_philo *philo)
@@ -49,15 +31,8 @@ void	monitor(t_arg *arg, t_philo *philo)
 	long long	now;
 
 	i = 0;
-	while (ft_check_philo_state(arg))
+	while (ft_check_philo_state(arg) && ft_check_eat_cnt(philo))
 	{
-		pthread_mutex_lock(philo->arg->eat_cnt);
-		if (philo->eat_cnt == philo->arg->option_must_eat)
-		{
-			pthread_mutex_unlock(philo->arg->eat_cnt);
-			break ;
-		}
-		pthread_mutex_unlock(philo->arg->eat_cnt);
 		i = 0;
 		while (i < arg->number_of_philo)
 		{
