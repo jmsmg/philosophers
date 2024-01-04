@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:03:58 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 20:27:40 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:24:37 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ t_philo		*init_philo(t_arg *input);
 
 pthread_t	*thread_process(t_arg *arg, t_philo *philo);
 
+int			ft_check_philo_state(t_arg *arg);
+void		ft_kill_philo(t_arg *arg);
 void		ft_wait_time(t_philo *philo, long long time);
 void		philo_printf(t_arg *arg, int id, char *sentence);
 long long	get_time(void);

@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:16:21 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/03 20:41:23 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 10:54:19 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	philo_think(t_philo *philo)
 {
+	if (philo->arg->number_of_philo == 1)
+	{
+		return ;
+	}
 	philo_printf(philo->arg, philo->id, "is thinking\n");
 }
 
@@ -21,6 +25,10 @@ void	philo_sleep(t_philo *philo)
 {
 	long long	start;
 
+	if (philo->arg->number_of_philo == 1)
+	{
+		return ;
+	}
 	start = get_time();
 	philo_printf(philo->arg, philo->id, "is sleeping\n");
 	while (get_time() - start <= philo->arg->time_to_sleep)
@@ -34,16 +42,16 @@ void	philo_eat(t_philo *philo)
 	pthread_mutex_lock(&(philo->arg->pick[philo->left]));
 	philo->arg->fork[philo->left] = 1;
 	philo_printf(philo->arg, philo->id, "has taken a fork\n");
-	if (philo->left != philo->right)
+	if (philo->arg->number_of_philo != 1)
 	{
 		pthread_mutex_lock(&(philo->arg->pick[philo->right]));
 		philo->arg->fork[philo->right] = 1;
 		philo_printf(philo->arg, philo->id, "has taken a fork\n");
 		philo_printf(philo->arg, philo->id, "is eating\n");
+		ft_wait_time(philo, philo->arg->time_to_eat);
 		pthread_mutex_lock(philo->arg->eat_cnt);
 		philo->eat_cnt++;
 		pthread_mutex_unlock(philo->arg->eat_cnt);
-		ft_wait_time(philo, philo->arg->time_to_eat);
 		philo->arg->fork[philo->right] = 0;
 		pthread_mutex_unlock(&(philo->arg->pick[philo->right]));
 		philo->arg->fork[philo->left] = 0;
@@ -55,16 +63,15 @@ void	start_routine(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
 		usleep(1000);
-
-	while (1)
+	while (ft_check_philo_state(philo->arg))
 	{
-		pthread_mutex_lock(philo->arg->alive_mutex);
-		if (!philo->arg->alive)
+		pthread_mutex_lock(philo->arg->eat_cnt);
+		if (philo->eat_cnt == philo->arg->number_of_philo)
 		{
-			pthread_mutex_unlock(philo->arg->alive_mutex);
-			break;
+			pthread_mutex_unlock(philo->arg->eat_cnt);
+			break ;
 		}
-		pthread_mutex_unlock(philo->arg->alive_mutex);
+		pthread_mutex_unlock(philo->arg->eat_cnt);
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);

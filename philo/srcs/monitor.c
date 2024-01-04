@@ -6,7 +6,7 @@
 /*   By: seonggoc <seonggoc@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 12:45:41 by seonggoc          #+#    #+#             */
-/*   Updated: 2024/01/04 09:40:10 by seonggoc         ###   ########.fr       */
+/*   Updated: 2024/01/04 11:02:51 by seonggoc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	monitor(t_arg *arg, t_philo *philo)
 	long long	now;
 
 	i = 0;
-	while (philo->arg->alive)
+	while (ft_check_philo_state(arg))
 	{
 		i = 0;
 		while (i < arg->number_of_philo)
@@ -54,11 +54,8 @@ void	monitor(t_arg *arg, t_philo *philo)
 			pthread_mutex_lock(philo->arg->eat_cnt);
 			if (philo->eat_cnt == philo->arg->option_must_eat)
 			{
-				pthread_mutex_lock(philo->arg->alive_mutex);
-				arg->alive = 0;
-				pthread_mutex_unlock(philo->arg->alive_mutex);
-				philo_printf((&philo[i])->arg, (&philo[i])->id, "died\n");
-				printf("died\n");
+				ft_kill_philo(arg);
+				break ;
 			}
 			pthread_mutex_unlock(philo->arg->eat_cnt);
 			pthread_mutex_lock(philo->arg->last_eat);
@@ -66,11 +63,8 @@ void	monitor(t_arg *arg, t_philo *philo)
 			pthread_mutex_unlock(philo->arg->last_eat);
 			if (arg->time_to_alive <= (now - eat))
 			{
-				pthread_mutex_lock(philo->arg->alive_mutex);
-				arg->alive = 0;
-				pthread_mutex_unlock(philo->arg->alive_mutex);
 				philo_printf((&philo[i])->arg, (&philo[i])->id, "died\n");
-				printf("died\n");
+				ft_kill_philo(arg);
 			}
 			i++;
 		}
